@@ -36,7 +36,7 @@ namespace project3VehicleServiceBookingApp.Controllers
         [HttpPost]
         public IActionResult createService(AddServiceTypeDto st)
         {
-            string smsg=db.inser
+            string smsg=db.insertService(st);
             return View();
         }
     }

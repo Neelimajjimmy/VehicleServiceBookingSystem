@@ -198,10 +198,10 @@ namespace project3VehicleServiceBookingApp.Models
             con.Close();
             return values;
         }
-        public string editService(string id,EditServiceTypeDto ob)
-        {
+        //public string editService(string id,EditServiceTypeDto  ob)
+        //{
 
-        }
+        //}
 
         }
 }

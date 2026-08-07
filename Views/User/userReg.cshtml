@@ -17,12 +17,19 @@
         width: 100%;
         height: 41px;
     }
+
+    .maintitle {
+        color: darkblue;
+        font-weight: 600;
+        text-align: center;
+    }
 </style>
 <div class="container mt-5">
 
     <div class="row justify-content-center">
 
         <div class="col-md-6">
+            <h2 class="maintitle">AutoCare</h2>
 
             <div class="card shadow">
 
@@ -71,6 +78,11 @@
                         <button class ="submit-btn">
                             Submit
                         </button>
+                        <div class="text-center">
+                            <a asp-action="Login" asp-controller="Login">Login</a>
+
+                        </div>
+
                     </form>
                 </div>
 

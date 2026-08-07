@@ -8,8 +8,8 @@ namespace project3VehicleServiceBookingApp.Models
 {
     public class AppDB
     {
-        SqlConnection con = new SqlConnection(@"server=LAPTOP-6BVU8J4G\SQLEXPRESS;database=VServiceBookingDb;Integrated security=true");
-
+        //SqlConnection con = new SqlConnection(@"server=LAPTOP-6BVU8J4G\SQLEXPRESS;database=VServiceBookingDb;Integrated security=true");
+        SqlConnection con = new SqlConnection(@"workstation id=VehicleServiceBookingDb.mssql.somee.com;packet size=4096;user id=Neelima_SQLLogin_1;pwd=qxanu36qif;data source=VehicleServiceBookingDb.mssql.somee.com;persist security info=False;initial catalog=VehicleServiceBookingDb;TrustServerCertificate=True");
         public string addAdmin(AdminRegister ar)
         {
             try

@@ -22,7 +22,10 @@
 
     public class EditServiceTypeDto
     {
-        public int id { set; get; }
+        public string? name { set; get; }
+
+        public string? description { set; get; } 
+
         public decimal price { set; get; }
 
         public string? status { set; get; }

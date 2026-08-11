@@ -37,7 +37,27 @@ namespace project3VehicleServiceBookingApp.Controllers
         public IActionResult createService(AddServiceTypeDto st)
         {
             string smsg=db.insertService(st);
+            return RedirectToAction("servicesList");
+        }
+
+        public IActionResult servicesList() {
+            List<ServiceType> services=db.getAllServices();
+            ViewBag.services = services;
             return View();
         }
-    }
+
+        [HttpGet]
+        public IActionResult EditService(int id)
+        {
+            ServiceType st = db.GetServiceById(id);
+            return View(st);
+        }
+
+        [HttpPost]
+        public IActionResult EditService(ServiceType ob)
+        {
+            string emsg = db.editService(ob);
+            return RedirectToAction("servicesList");
+        }
+        }
 }

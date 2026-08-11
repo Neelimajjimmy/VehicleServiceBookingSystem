@@ -1,0 +1,57 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h3>Services</h3>
+
+<a asp-action="createService" class=" btn addbtn px-4">Add Service</a>
+<div class="card shadow border-0 mt-4">
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-light">
+                    <tr>
+                        
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price(Rs)</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    
+@foreach (var item in ViewBag.services)
+                    {
+                        <tr>
+                           
+                            <td>@item.name</td>
+                            <td>@item.description </td>
+                            <td>@item.price </td>
+                            <td>
+                                <span class="badge bg-success">
+                                    @item.status
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-sm btn-outline-primary" asp-action="EditService" asp-route-id="@item.id">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+
+                        
+                    }
+                </tbody>
+
+            </table>
+            </div>
+</div>
+    </div>

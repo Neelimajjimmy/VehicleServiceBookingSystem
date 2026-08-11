@@ -179,7 +179,7 @@ namespace project3VehicleServiceBookingApp.Models
         public List<ServiceType> getAllServices()
         {
             List<ServiceType> values = new List<ServiceType>();
-            SqlCommand cmd = new SqlCommand("sp_GetAllServices", con);
+            SqlCommand cmd = new SqlCommand("sp_GetServices", con);
             cmd.CommandType = CommandType.StoredProcedure;
             con.Open();
             SqlDataReader dr = cmd.ExecuteReader();
@@ -198,11 +198,56 @@ namespace project3VehicleServiceBookingApp.Models
             con.Close();
             return values;
         }
-        //public string editService(string id,EditServiceTypeDto  ob)
-        //{
 
-        //}
+        public ServiceType GetServiceById(int id)
+        {
+            ServiceType ob = null;
+            SqlCommand cmd = new SqlCommand("sp_GetServiceById", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", id);
+            con.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
 
+            while (dr.Read())
+            {
+                 ob = new ServiceType
+                {
+                    id = Convert.ToInt32(dr["typeid"]),
+                    name = dr["name"].ToString(),
+                    description = dr["description"].ToString(),
+                    price = Convert.ToDecimal(dr["price"]),
+                    status = dr["status"].ToString(),
+                };
+            }
+            con.Close( );
+            return ob;
+            }
+        public string editService(ServiceType ob)
+        {
+            try {
+
+                SqlCommand cmd = new SqlCommand("sp_editServiceType", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", ob.id);
+                cmd.Parameters.AddWithValue("@na", ob.name);
+                cmd.Parameters.AddWithValue("@desc", ob.description);
+                cmd.Parameters.AddWithValue("@pr", ob.price);
+                cmd.Parameters.AddWithValue("@st", ob.status);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+                return "Service edited ";
+            }
+            catch (Exception ex)
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+                return ex.Message;
+            }
         }
+
+    }
 }
 

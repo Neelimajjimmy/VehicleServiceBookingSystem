@@ -175,7 +175,25 @@ namespace project3VehicleServiceBookingApp.Models
                 return ex.Message;
             }
         }
+        public  DashboardData getDashboardSummary()
+        {
+            DashboardData data = null;
+            SqlCommand cmd = new SqlCommand("sp_adminSummary", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            con.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
 
+            while (dr.Read())
+            {
+                data = new DashboardData
+                {
+                    usercount = Convert.ToInt32(dr["Totalusers"]),
+                    bcount = Convert.ToInt32(dr["bookcount"])
+                };
+            }
+            con.Close();
+            return data;
+          }
         public List<ServiceType> getAllServices()
         {
             List<ServiceType> values = new List<ServiceType>();
@@ -247,7 +265,41 @@ namespace project3VehicleServiceBookingApp.Models
                 return ex.Message;
             }
         }
+        public Login GetUserDetails(string id)
+        {
+            int uid = Convert.ToInt32(id);
+            Login log = null;
+            SqlCommand cmd = new SqlCommand("sp_GetUserDetails", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", uid);
+            con.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
 
+            while (dr.Read())
+            {
+                log = new Login
+                {
+                    username = dr["username"].ToString(),
+                    password = dr["password"].ToString()
+                };
+            }
+            con.Close();
+            return log;
+          
+        }
+
+        public string changePassword(PasswordChangeDto ob, string id) {
+
+            int uid = Convert.ToInt32(id);
+            SqlCommand cmd = new SqlCommand("sp_ChangePassword", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", uid);
+            cmd.Parameters.AddWithValue("@npw", ob.newpwd);
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+            return "Password updated.Please login again";
+        }
     }
 }
 

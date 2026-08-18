@@ -23,6 +23,8 @@ namespace project3VehicleServiceBookingApp.Controllers
                 string id = db.getRegId(user);
                 string logtype=db.getLogtype(user);
                 HttpContext.Session.SetString("userid", id);
+            Login data=db.GetUserDetails(id);
+                HttpContext.Session.SetString("username", data.username);
                 if (logtype == "admin")
                 {
                     return RedirectToAction("Index", "Admin");
@@ -35,8 +37,14 @@ namespace project3VehicleServiceBookingApp.Controllers
             else
             {
                 TempData["msg"] = "Invalid Login";
+                return RedirectToAction("Login");
             }
-                return View();
+               
+        }
+
+        public IActionResult Logout()
+        {
+            return RedirectToAction("Login");
         }
     }
 }

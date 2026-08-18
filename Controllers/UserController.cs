@@ -22,5 +22,31 @@ namespace project3VehicleServiceBookingApp.Controllers
             TempData["usermsg"]= usermsg;
             return RedirectToAction("Login", "Login");
         }
+
+        [HttpGet]
+        public IActionResult ChangeUserPassword() {
+
+            Login user = db.GetUserDetails(HttpContext.Session.GetString("userid"));
+            PasswordChangeDto pw = new PasswordChangeDto
+            {
+                password = user.password
+            };
+            return View(pw);
+        }
+        [HttpPost]
+        public IActionResult ChangeUserPassword(PasswordChangeDto ob) {
+
+            string id = HttpContext.Session.GetString("userid");
+            if (ModelState.IsValid)
+            {
+                string pwmsg = db.changePassword(ob, id);
+                TempData["pwmsg"] = pwmsg;
+                return RedirectToAction("ChangeUserPassword");
+            }
+            else
+            {
+                return View(ob);
+            }
+        }
     }
 }

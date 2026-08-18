@@ -9,7 +9,8 @@ namespace project3VehicleServiceBookingApp.Controllers
         
         public IActionResult Index()
         {
-            return View();
+            DashboardData data = db.getDashboardSummary();
+            return View(data);
         }
 
         [HttpGet]
@@ -59,5 +60,32 @@ namespace project3VehicleServiceBookingApp.Controllers
             string emsg = db.editService(ob);
             return RedirectToAction("servicesList");
         }
+
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            Login user = db.GetUserDetails(HttpContext.Session.GetString("userid"));
+            PasswordChangeDto pw = new PasswordChangeDto
+            {
+                password = user.password
+            };
+            return View(pw);
         }
+
+        [HttpPost]
+        public IActionResult ChangePassword(PasswordChangeDto ob)
+        {
+            string id = HttpContext.Session.GetString("userid");
+            if (ModelState.IsValid)
+            {
+                string pwmsg = db.changePassword(ob, id);
+                TempData["pwmsg"] = pwmsg;
+                return RedirectToAction("ChangePassword");
+            }
+            else
+            {
+                return View(ob);
+            }
+        }
+    }
 }

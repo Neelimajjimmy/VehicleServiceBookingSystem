@@ -8,6 +8,9 @@ namespace project3VehicleServiceBookingApp.Controllers
         AppDB db=new AppDB();
         public IActionResult userIndex()
         {
+            List<ServiceType> services = new List<ServiceType>();
+            services=db.getAllServices().Where(x=>x.status=="active").ToList();
+            ViewBag.services = services;
             return View();
         }
         [HttpGet]
@@ -41,7 +44,7 @@ namespace project3VehicleServiceBookingApp.Controllers
             {
                 string pwmsg = db.changePassword(ob, id);
                 TempData["pwmsg"] = pwmsg;
-                return RedirectToAction("ChangeUserPassword");
+                return RedirectToAction("Login","Login");
             }
             else
             {

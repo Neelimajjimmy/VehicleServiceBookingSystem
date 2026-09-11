@@ -1,0 +1,84 @@
+﻿@model project3VehicleServiceBookingApp.Models.AddVehicleDto
+@{
+    Layout = "userLayout";
+}
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+            <h3>Create Vehicle</h3>
+
+            <div class="card shadow">
+
+
+
+                <div class="card-body">
+                    <form asp-action="CreateVehicle" method="post">
+                        <div class="mb-3">
+                            <label>Registration Number</label>
+                            <input asp-for="regNo"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Model</label>
+                            <input asp-for="model"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Brand</label>
+                            <input asp-for="brand"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+
+                            <div class="d-flex gap-4">
+
+                                <div class="form-check">
+                                    <input type="radio"
+                                           class="form-check-input"
+                                           value="Petrol"
+                                           asp-for="fueltype" />
+                                    <label class="form-check-label">Petrol</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input type="radio"
+                                           class="form-check-input"
+                                           value="Diesel"
+                                           asp-for="fueltype" />
+                                    <label class="form-check-label">Diesel</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input type="radio"
+                                           class="form-check-input"
+                                           value="Electric"
+                                           asp-for="fueltype" />
+                                    <label class="form-check-label">Electric</label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Current Mileage</label>
+                            <input asp-for="mileage"
+                                   class="form-control" />
+                        </div>
+                        <button class="submit-btn mb-3">
+                            Submit
+                        </button>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

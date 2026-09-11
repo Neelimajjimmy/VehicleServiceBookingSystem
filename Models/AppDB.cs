@@ -300,6 +300,84 @@ namespace project3VehicleServiceBookingApp.Models
             con.Close();
             return "Password updated.Please login again";
         }
+
+        public UserInfo getUserSummary(int userid)
+        {
+            UserInfo data = null;
+            SqlCommand cmd = new SqlCommand("sp_userSummary", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@uid", userid);
+                con.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                data = new UserInfo
+                {
+                    vcount = Convert.ToInt32(dr["vcount"]),
+                    bcount = Convert.ToInt32(dr["bookcount"]),
+                    completecount = Convert.ToInt32(dr["completecount"])
+                };
+            }
+            con.Close();
+            return data;
+            }
+        
+    public string insertVehicle(AddVehicleDto ob,int uid){
+
+            try
+            {
+                
+                SqlCommand cmd = new SqlCommand("sp_CreateVehicle", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@uid", uid);
+                cmd.Parameters.AddWithValue("@regNo", ob.regNo);
+                cmd.Parameters.AddWithValue("@model", ob.model);
+                cmd.Parameters.AddWithValue("@brand", ob.brand);
+                cmd.Parameters.AddWithValue("@fuelt", ob.fueltype);
+                cmd.Parameters.AddWithValue("@currmil", ob.mileage);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+                return "Vehicle added ";
+            }
+            catch (Exception ex)
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+                return ex.Message;
+            }
+
+        }
+
+        public List<Vehicle> getAllVehicles(int uid)
+        {
+            List<Vehicle> values = new List<Vehicle>();
+            SqlCommand cmd = new SqlCommand("sp_GetAllVehicles", con);
+            cmd.Parameters.AddWithValue("@uid", uid);
+            cmd.CommandType = CommandType.StoredProcedure;
+            con.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                Vehicle ob = new Vehicle
+                {
+                    vid = Convert.ToInt32(dr["vehicleid"]),
+                    userid= Convert.ToInt32(dr["userid"]),
+                    regNo = dr["registrationNo"].ToString(),
+                    brand = dr["brand"].ToString(),
+                    model = dr["model"].ToString(),
+                    fueltype = dr["fueltype"].ToString(),
+                    mileage = dr["currentMileage"].ToString()
+                };
+                values.Add(ob);
+            }
+            con.Close();
+            return values;
+        }
     }
 }
 

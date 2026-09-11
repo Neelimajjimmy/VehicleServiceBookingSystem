@@ -8,9 +8,13 @@ namespace project3VehicleServiceBookingApp.Controllers
         AppDB db=new AppDB();
         public IActionResult userIndex()
         {
+            string id = HttpContext.Session.GetString("userid");
             List<ServiceType> services = new List<ServiceType>();
             services=db.getAllServices().Where(x=>x.status=="active").ToList();
             ViewBag.services = services;
+
+            UserInfo data = db.getUserSummary(Convert.ToInt32(id));
+            ViewBag.userdata=data;
             return View();
         }
         [HttpGet]
@@ -50,6 +54,30 @@ namespace project3VehicleServiceBookingApp.Controllers
             {
                 return View(ob);
             }
+        }
+
+        [HttpGet]
+        public IActionResult CreateVehicle()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateVehicle(AddVehicleDto ob)
+        {
+            int id = Convert.ToInt32(HttpContext.Session.GetString("userid"));
+            string msg=db.insertVehicle(ob, id);
+
+            return RedirectToAction("vehicleList");
+        }
+
+        [HttpGet]
+        public IActionResult vehicleList() {
+
+            int id = Convert.ToInt32(HttpContext.Session.GetString("userid"));
+            List<Vehicle> vehicles = db.getAllVehicles(id);
+            ViewBag.vehicles = vehicles;
+            return View();
         }
     }
 }

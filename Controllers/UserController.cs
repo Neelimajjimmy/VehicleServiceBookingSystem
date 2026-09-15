@@ -79,5 +79,35 @@ namespace project3VehicleServiceBookingApp.Controllers
             ViewBag.vehicles = vehicles;
             return View();
         }
-    }
+        [HttpGet]
+        public IActionResult bookService(int id)
+        {
+            BookService bs=new BookService();
+            int uid = Convert.ToInt32(HttpContext.Session.GetString("userid"));
+            List<Vehicle> vehicles = db.getAllVehicles(uid);
+            ViewBag.vehicles = vehicles;
+           
+            bs.stid= id;
+          ServiceType s = db.GetServiceById(id);
+            ViewBag.sname = s.name;
+            return View(bs);
+        }
+        [HttpPost]
+        public IActionResult bookService(BookService bs)
+        {
+            int uid = Convert.ToInt32(HttpContext.Session.GetString("userid"));
+            bs.userid = uid;
+            string msg = db.bookService(bs);
+            return RedirectToAction("userBookings");
+        }
+        [HttpGet]
+        public IActionResult userBookings()
+        {
+            int id = Convert.ToInt32(HttpContext.Session.GetString("userid"));
+            List<Booking> bkings = new List<Booking>();
+            bkings=db.GetUserBookings(id);
+            ViewBag.userBooks = bkings;
+            return View();
+        }
+        }
 }

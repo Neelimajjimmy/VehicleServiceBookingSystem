@@ -378,6 +378,63 @@ namespace project3VehicleServiceBookingApp.Models
             con.Close();
             return values;
         }
+
+        public string bookService(BookService bs) {
+
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("sp_bookService", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@uid", bs.userid);
+                cmd.Parameters.AddWithValue("@vid", bs.vhid);
+                cmd.Parameters.AddWithValue("@sid", bs.stid);
+                cmd.Parameters.Add("@sdate", SqlDbType.Date)
+                    .Value = bs.sdate?.Date;
+                cmd.Parameters.AddWithValue("@st", "pending");
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+                return "Service booked";
+            }
+            catch (Exception ex)
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+                return ex.Message;
+            }
+
+        }
+
+        public List<Booking> GetUserBookings(int uid)
+        {
+
+            List<Booking> values = new List<Booking>();
+            SqlCommand cmd = new SqlCommand("sp_GetUserBookings", con);
+            cmd.Parameters.AddWithValue("@uid", uid);
+            cmd.CommandType = CommandType.StoredProcedure;
+            con.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                Booking ob = new Booking
+                {
+                    bid = Convert.ToInt32(dr["bookingId"]),
+                    sname = dr["name"].ToString(),
+                    model = dr["model"].ToString(),
+                    bdate = Convert.ToDateTime(dr["bookingdate"]),
+                    sdate = Convert.ToDateTime(dr["servicedate"]),
+                    st = dr["bkstatus"].ToString()
+
+                };
+                values.Add(ob);
+            }
+            con.Close();
+            return values;
+            }
     }
 }
 

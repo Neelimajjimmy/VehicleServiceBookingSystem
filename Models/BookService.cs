@@ -21,4 +21,18 @@
         public string? st {  get; set; }
 
     }
+
+    public class AdminBooking {
+
+        public int bid { get; set; }
+        public string? sname { get; set; }
+
+        public string? uname { get; set; }
+        public string? model { get; set; }
+
+        public DateTime sdate { get; set; }
+
+        public string? st { get; set; }
+
+    }
 }

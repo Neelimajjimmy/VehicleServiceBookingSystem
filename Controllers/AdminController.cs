@@ -10,6 +10,9 @@ namespace project3VehicleServiceBookingApp.Controllers
         public IActionResult Index()
         {
             DashboardData data = db.getDashboardSummary();
+            List<AdminBooking> bookings =new List<AdminBooking>();
+            bookings = db.GetAllBookings();
+            ViewBag.abkings = bookings;
             return View(data);
         }
 
@@ -100,7 +103,6 @@ namespace project3VehicleServiceBookingApp.Controllers
 
 
 
-
         public IActionResult checkNewPwd(PasswordChangeDto pw)
         {
             if (pw.newpwd == pw.password)
@@ -109,5 +111,7 @@ namespace project3VehicleServiceBookingApp.Controllers
                 return Json(true);
 
         }
+
+        
     }
 }

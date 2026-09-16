@@ -62,67 +62,37 @@
                             <th>Customer</th>
                             <th>Vehicle</th>
                             <th>Service</th>
-                            <th>Booking Date</th>
+                            <th>Service Date</th>
                             <th>Status</th>
-                            <th class="text-center">Action</th>
+                            
                         </tr>
                     </thead>
 
                     <tbody>
 
-                        <tr>
-                            <td>#1001</td>
-                            <td>John Mathew</td>
-                            <td>Hyundai i20</td>
-                            <td>Oil Change</td>
-                            <td>23-Jul-2026</td>
-                            <td>
-                                <span class="badge bg-warning text-dark">
-                                    Pending
+                        @foreach (var item in ViewBag.abkings)
+                        {
+                            <tr>
+                                <td>@item.bid</td>
+                                <td>@item.uname</td>
+                                <td>@item.model</td>
+                                <td>@item.sname</td>
+                                <td>@item.sdate?.ToString("dd-MM-yyyy")</td>
+                                <td>
+                                    <span class="badge  @(item.st == "pending" ? "bg-warning text-dark" :
+                                                                                      item.st == "confirmed" ? "bg-primary" :
+                                                                                      item.st == "completed" ? "bg-success" :
+                                                                                      item.st == "cancelled" ? "bg-danger" :
+                                                                                      "bg-secondary")">
+                                    @item.st
                                 </span>
                             </td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-outline-primary">
-                                    View
-                                </button>
-                            </td>
-                        </tr>
+                           
+                            </tr>
+                                                }
 
-                        <tr>
-                            <td>#1002</td>
-                            <td>Rahul</td>
-                            <td>Swift</td>
-                            <td>Car Wash</td>
-                            <td>22-Jul-2026</td>
-                            <td>
-                                <span class="badge bg-success">
-                                    Completed
-                                </span>
-                            </td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-outline-primary">
-                                    View
-                                </button>
-                            </td>
-                        </tr>
 
-                        <tr>
-                            <td>#1003</td>
-                            <td>Anjali</td>
-                            <td>Kia Sonet</td>
-                            <td>Wheel Alignment</td>
-                            <td>21-Jul-2026</td>
-                            <td>
-                                <span class="badge bg-info">
-                                    In Progress
-                                </span>
-                            </td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-outline-primary">
-                                    View
-                                </button>
-                            </td>
-                        </tr>
+                        
 
                     </tbody>
 

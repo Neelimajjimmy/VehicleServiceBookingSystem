@@ -435,6 +435,33 @@ namespace project3VehicleServiceBookingApp.Models
             con.Close();
             return values;
             }
+
+        public List<AdminBooking> GetAllBookings()
+        {
+
+            List<AdminBooking> values = new List<AdminBooking>();
+            SqlCommand cmd = new SqlCommand("sp_getAllBookings", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            con.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                AdminBooking ob = new AdminBooking
+                {
+                    bid = Convert.ToInt32(dr["bookingId"]),
+                    sname = dr["name"].ToString(),
+                    uname = dr["uname"].ToString(),
+                    model = dr["model"].ToString(),
+                    sdate = Convert.ToDateTime(dr["servicedate"]),
+                    st = dr["bkstatus"].ToString()
+
+                };
+                values.Add(ob);
+            }
+            con.Close();
+            return values;
+        }
     }
 }
 

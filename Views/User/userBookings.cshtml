@@ -38,8 +38,8 @@
                            
                             <td>@item.model</td>
                             <td>@item.sname</td>
-                            <td>@item.bdate</td>
-                            <td>@item.sdate</td>
+                            <td>@item.bdate?.ToString("dd-MM-yyyy") </td>
+                            <td>@item.sdate?.ToString("dd-MM-yyyy")</td>
                             <td>
                                 <span class="badge  @(item.st == "pending" ? "bg-warning text-dark" :
                                             item.st == "confirmed" ? "bg-primary" :

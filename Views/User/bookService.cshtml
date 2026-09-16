@@ -13,7 +13,7 @@
                 <div class="card-body p-4">
 
                     <h3 class="fw-bold mb-1">
-                        <i class="fa-solid fa-calendar-check darkblue me-2"></i>
+                        <i class="fa-solid fa-calendar-check  me-2" style="color:darkblue"></i>
                         Book Service
                     </h3>
 
@@ -54,7 +54,7 @@
                     </div>
                     <form asp-action="bookService" method="post">
                         <input type="hidden" asp-for="stid" />
-@if (ViewBag.vehicles == null )
+@if (ViewBag.vehicles == null || ViewBag.vehicles.Count==0 )
 {
     <div class="text-center py-4">
 
@@ -152,13 +152,13 @@ else if (ViewBag.vehicles.Count == 1)
 
                                         <input type="radio"
                                         class="btn-check"
-                                        name="VehicleId"
-                                        id="vehicle1"
+                                      
+                                                   id="@item.vid"
                                         value="@item.vid"
                                         asp-for="vhid">
 
                                         <label class="vehicle-card"
-                                        for="vehicle1">
+                                                   for="@item.vid">
 
                                             <div class="d-flex align-items-center">
 

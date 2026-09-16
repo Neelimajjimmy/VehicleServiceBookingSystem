@@ -97,8 +97,14 @@ namespace project3VehicleServiceBookingApp.Controllers
         {
             int uid = Convert.ToInt32(HttpContext.Session.GetString("userid"));
             bs.userid = uid;
-            string msg = db.bookService(bs);
-            return RedirectToAction("userBookings");
+            List<Vehicle> vehicles = db.getAllVehicles(uid);
+            ViewBag.vehicles = vehicles;
+            if (ViewBag.vehicles.Count > 0)
+            {
+                string msg = db.bookService(bs);
+                return RedirectToAction("userBookings");
+            }
+            return View(bs);
         }
         [HttpGet]
         public IActionResult userBookings()

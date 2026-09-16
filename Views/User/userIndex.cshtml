@@ -15,7 +15,7 @@
 <div class="container mt-4">
 
     <!-- Welcome -->
-    <div class="card shadow-sm border-0 mb-4">
+   @*  <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
             <h2 class="fw-bold">
                 Hello,@Context.Session.GetString("username")👋
@@ -24,7 +24,7 @@
                 Welcome back! Here's a quick overview of your account.
             </p>
         </div>
-    </div>
+    </div> *@
 
     <!-- Dashboard Cards -->
     <div class="row g-4 mb-5">
@@ -61,7 +61,7 @@
                         @ViewBag.userdata.bcount
                     </h2>
 
-                    <a href="#" class="btn btn-outline-success mt-3">
+                    <a class="btn btn-outline-success mt-3" asp-action="userBookings">
                         View Bookings
                     </a>
 
@@ -81,9 +81,7 @@
                         @ViewBag.userdata.completecount
                     </h2>
 
-                    <a href="#" class="btn btn-outline-info mt-3">
-                        Service History
-                    </a>
+                    
 
                 </div>
             </div>
@@ -109,8 +107,22 @@
 
                     <div class="card-body">
 
-                            <i class="fa-solid fa-wrench mb-3"></i>
-                        <h5>@item.name</h5>
+                            <div class="d-flex align-items-center mb-3">
+
+                                <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+                                     style="width:45px; height:45px; background-color:#eef4ff;">
+
+                                    <i class="fa-solid fa-wrench"
+                                       style="color:#1E3A5F;"></i>
+
+                                </div>
+
+                                <h5 class="mb-0 fw-bold">
+                                    @item.name
+                                </h5>
+
+                            </div>
+                        
 
                         <p class="text-muted">
                            @item.description
